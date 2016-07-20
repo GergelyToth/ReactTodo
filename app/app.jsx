@@ -8,7 +8,10 @@ $(document).foundation();
 // App SCSS
 require('style!css!sass!Styles/app.scss');
 
+// Components
+var TodoApp = require('TodoApp');
+
 ReactDOM.render(
-	<p>Boilerplate 3 Project</p>,
+	<TodoApp/>,
 	document.getElementById('app')
 );
