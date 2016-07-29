@@ -43,7 +43,7 @@ describe('Reducers', () => {
 			expect(res[0]).toEqual(action.todo);
 		});
 
-		it('should toggle todo to true and set completedAt', () => {
+		it('should update todo to true and set completedAt', () => {
 			var todos = [{
 				id: 1,
 				text: 'Walk the dog',
@@ -51,17 +51,23 @@ describe('Reducers', () => {
 				createdAt: 1234,
 				completedAt: undefined
 			}];
+			var updates = {
+				completed: true,
+				completedAt: 123
+			};
 			var action = {
-				type: 'TOGGLE_TODO',
-				id: 1
+				type: 'UPDATE_TODO',
+				id: todos[0].id,
+				updates
 			};
 			var res = reducers.todosReducer(df(todos), df(action));
 
 			expect(res[0].completed).toBe(true);
 			expect(res[0].completedAt).toBeA('number');
+			expect(res[0].text).toBe(todos[0].text);
 		});
 
-		it('should toggle todo to false and remove completedAt', () => {
+		it('should update todo to false and remove completedAt', () => {
 			var todos = [{
 				id: 1,
 				text: 'Walk the dog',
@@ -69,14 +75,20 @@ describe('Reducers', () => {
 				createdAt: 1234,
 				completedAt: 12345
 			}];
+			var updates = {
+				completed: false,
+				completedAt: null
+			};
 			var action = {
-				type: 'TOGGLE_TODO',
-				id: 1
+				type: 'UPDATE_TODO',
+				id: todos[0].id,
+				updates
 			};
 			var res = reducers.todosReducer(df(todos), df(action));
 
-			expect(res[0].completed).toBe(false);
-			expect(res[0].completedAt).toBe(undefined);
+			expect(res[0].completed).toBe(updates.completed);
+			expect(res[0].completedAt).toBe(updates.completedAt);
+			expect(res[0].text).toBe(todos[0].text);
 		});
 
 		it('should add existing todos', () => {
