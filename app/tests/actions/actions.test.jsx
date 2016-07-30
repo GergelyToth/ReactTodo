@@ -144,4 +144,26 @@ describe('Actions', () => {
 			}, done);
 		});
 	});
+
+	describe('Tests with authorization', () => {
+		it('should populate auth object with uid and fire LOGIN action', () => {
+			var uid = 'abcd1234';
+			var action = {
+				type: 'LOGIN',
+				uid
+			};
+			var res = actions.login(uid);
+
+			expect(res).toEqual(action);
+		});
+
+		it('should generate LOGOUT action', () => {
+			var action = {
+				type: 'LOGOUT'
+			};
+			var res = actions.logout();
+
+			expect(res).toEqual(action);
+		});
+	});
 });

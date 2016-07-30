@@ -109,4 +109,28 @@ describe('Reducers', () => {
 			expect(res[0]).toEqual(todos[0]);
 		});
 	});
+
+	describe('authReducer', () => {
+		it('should add uid object', () => {
+			var auth = {uid: 'abcd1234'};
+			var action = {
+				type: 'LOGIN',
+				uid: auth.uid
+			};
+			var res = reducers.authReducer(df({}), df(action));
+
+			expect(res).toEqual(auth);
+			expect(res).toBeA('object');
+		});
+
+		it('should delete uid and return an empty object', () => {
+			var action = {
+				type: 'LOGOUT'
+			};
+			var res = reducers.authReducer(df({uid: 'abcd1234'}), df(action));
+
+			expect(res).toEqual({});
+			expect(res).toBeA('object');
+		});
+	});
 });
